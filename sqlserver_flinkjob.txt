@@ -1,0 +1,22 @@
+docker exec doris-jobmanager-1 /opt/flink/bin/flink run \
+     -Dexecution.checkpointing.interval=10s \
+     -Dparallelism.default=1 \
+     -c org.apache.doris.flink.tools.cdc.CdcTools \
+     /opt/flink/lib/flink-doris-connector-1.17-1.6.2.jar \
+     sqlserver-sync-database \
+     --table-prefix ods_ \
+     --database mysql_demo \
+     --sqlserver-conf hostname=114.55.43.29 \
+     --sqlserver-conf port=1433 \
+     --sqlserver-conf username=developer \
+     --sqlserver-conf password="i5cTxfW3Z01v" \
+     --sqlserver-conf database-name=DB.WzyTemp \
+     --sqlserver-conf schema-name=dbo \
+     --including-tables "Employees" \
+     --sink-conf fenodes=172.24.126.232:8030 \
+     --sink-conf benodes=172.24.126.232:8040 \
+     --sink-conf username=root \
+     --sink-conf password=\
+     --sink-conf jdbc-url=jdbc:mysql://172.24.126.232:9030 \
+     --sink-conf sink.label-prefix=label \
+     --table-conf replication_num=1

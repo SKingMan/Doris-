@@ -1,0 +1,20 @@
+docker exec doris-jobmanager-1 /opt/flink/bin/flink run \
+-Dexecution.checkpointing.interval=5s \
+-Dparallelism.default=1 \
+-c org.apache.doris.flink.tools.cdc.CdcTools \
+/opt/flink/lib/flink-doris-connector-1.17-1.6.2.jar \
+           mysql-sync-database \
+--database mysql_demo \
+--mysql-conf hostname=172.24.126.232 \
+--mysql-conf username=root \
+--mysql-conf password=111111 \
+--mysql-conf port=3306 \
+--mysql-conf database-name=doris-test \
+--sink-conf fenodes=172.24.126.232:8030 \
+--sink-conf benodes=172.24.126.232:8040 \
+--sink-conf username=root \
+--sink-conf password= \
+--sink-conf jdbc-url=jdbc:mysql://172.24.126.232:9030 \
+--sink-conf sink.label-prefix=label \
+--single-sinktrue \
+--table-conf replication_num=1 ;
